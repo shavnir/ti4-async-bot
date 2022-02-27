@@ -26,6 +26,7 @@ public class AsyncGame implements Serializable {
 	private String gameName;
 	private int gameNumber = -1;
 	private long primaryChannelID = -1;
+
 	// Enum stating if we're playing or waiting to play
 	private AsyncGameState gameState;
 
@@ -35,12 +36,11 @@ public class AsyncGame implements Serializable {
 	// Action card deck
 	private Deque<Card> actionCardDeck = new ArrayDeque<>(250);
 	private List<Card> actionCardDiscard = new ArrayList<>(250);
-	
-	public Set<Long> getPlayerSet()
-	{
+
+	public Set<Long> getPlayerSet() {
 		return playerMap.keySet();
 	}
-	
+
 	public void setGameName(String gameName) {
 		this.gameName = gameName;
 	}
@@ -52,11 +52,11 @@ public class AsyncGame implements Serializable {
 	public void setGameNumber(int gameNumber) {
 		this.gameNumber = gameNumber;
 	}
-	
+
 	public int getGameNumber() {
 		return gameNumber;
 	}
-	
+
 	public AsyncGameState getGameState() {
 		return gameState;
 	}
@@ -121,7 +121,7 @@ public class AsyncGame implements Serializable {
 	public void drawActionCards(long playerID, int cardCount) {
 		Player p = playerMap.get(playerID);
 		if (p != null) {
-			if(actionCardDeck.isEmpty()) {
+			if (actionCardDeck.isEmpty()) {
 				reshuffleActionCardDiscardIntoDeck();
 			}
 			Card c = actionCardDeck.pollFirst();
