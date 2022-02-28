@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 
 import ti4.async.bot.game.elements.Card;
+import ti4.async.bot.game.elements.CardDB;
 
 public class AsyncGame implements Serializable {
 
@@ -27,6 +28,8 @@ public class AsyncGame implements Serializable {
 	private int gameNumber = -1;
 	private long primaryChannelID = -1;
 
+	private boolean initialized = false;
+
 	// Enum stating if we're playing or waiting to play
 	private AsyncGameState gameState;
 
@@ -36,6 +39,24 @@ public class AsyncGame implements Serializable {
 	// Action card deck
 	private Deque<Card> actionCardDeck = new ArrayDeque<>(250);
 	private List<Card> actionCardDiscard = new ArrayList<>(250);
+
+	public AsyncGame() {
+		if (!initialized) // double check for deserilization situations
+		{
+			CardDB cdb = CardDB.getSingleton();
+			if (cdb != null) {
+				List<Card> tempList = new ArrayList<>(250);
+				for (Card c : cdb.getActionCardList()) {
+					tempList.add(new Card(c));
+				}
+				Collections.shuffle(tempList);
+				actionCardDeck.addAll(tempList);
+			}
+
+		} else {
+			// todo - log or something here
+		}
+	}
 
 	public Set<Long> getPlayerSet() {
 		return playerMap.keySet();

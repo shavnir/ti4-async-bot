@@ -8,7 +8,7 @@ public class Card implements Serializable {
 	private String name;
 	private String text;
 	private CardType type;
-	
+
 	public Card(long id, String name, String text, CardType type) {
 		this.id = id;
 		this.name = name;
@@ -16,15 +16,25 @@ public class Card implements Serializable {
 		this.type = type;
 	}
 
+	public Card(Card x) {
+		this.id = x.getId();
+		this.name = x.getName();
+		this.text = x.getText();
+		this.type = x.getType();
+	}
+
 	public long getId() {
 		return id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public String getText() {
 		return text;
 	}
+
 	public CardType getType() {
 		return type;
 	}
